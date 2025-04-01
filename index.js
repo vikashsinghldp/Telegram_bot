@@ -2,8 +2,9 @@
 const { Telegraf, Markup } = require('telegraf');
 
 const bot = new Telegraf(process.env.BOT_TOKEN);
-
-
+const express = require('express')
+const app = express()
+const port = 3000
 
 //button
 const mainMenu = Markup.inlineKeyboard([
@@ -75,19 +76,8 @@ bot.on('text', (ctx) => {
 
 // Start the bot
 bot.launch();
-const express = require('express')
-const app = express()
-const PORT = 4000
 
 
-app.get('/home', (req, res) => {
-  res.status(200).json('Welcome, your app is working well');
-})
-
-
-app.listen(PORT, () => {
-  console.log(`Server running at http://localhost:${PORT}`);
-});
 
 // Export the Express API
 module.exports = app
@@ -96,3 +86,12 @@ console.log("🤖 Bot is running...");
 // Graceful stop
 process.once('SIGINT', () => bot.stop('SIGINT'));
 process.once('SIGTERM', () => bot.stop('SIGTERM'));
+
+
+app.get('/', (req, res) => {
+  res.send('Hello World!')
+})
+
+app.listen(port, () => {
+  console.log(`Example app listening on port ${port}`)
+})
